@@ -193,6 +193,7 @@ class Parent:
 
     def child(self):
         """Return list of children associated with current parent"""
+        from models.Child import Child
         sql = """
             SELECT * FROM children
             WHERE parent_id = ?
