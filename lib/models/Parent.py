@@ -168,6 +168,8 @@ class Parent:
 
 
     ######filters
+
+############# double check method below    
     @classmethod
     def find_by_email(cls, email):
         """Return a Parent object corresponding to the table row matching the specified primary key"""
