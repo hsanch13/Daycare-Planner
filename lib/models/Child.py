@@ -166,19 +166,18 @@ class Child:
 
 ########## filer methods
 
-######## check method below
+######## check methods below
     @classmethod
     def find_by_age(cls, age):
-        """Return Child object corresponding to the table row matching the specified primary key"""
+        """Return Child object corresponding to the table row matching the specified age"""
         sql = """
             SELECT *
             FROM employees
-            WHERE id = ?
+            WHERE age = ?
         """
 
-        row = CURSOR.execute(sql, (id,)).fetchone()
+        row = CURSOR.execute(sql, (age,)).fetchone()
         return cls.instance_from_db(row) if row else None
-
 
     @classmethod
     def find_by_name(cls, name):
