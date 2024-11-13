@@ -1,22 +1,17 @@
-from __init__ import CURSOR, CONN
-from parent import Parent
+from models.__init__ import CURSOR, CONN
+from models.Parent import Parent
 
 class Child:
 
     # Dictionary of objects saved to the database.
     all = {}
 
-    def __init__(self, name, gender, age, id=None):
+    def __init__(self, name, gender, age, parent_id, id=None):
         self.id = id
         self.name = name
         self.gender = gender
         self.age = age
-
-    # def __repr__(self):
-    #     return (
-    #         f"<Employee {self.id}: {self.name}, {self.job_title}, " +
-    #         f"Department ID: {self.department_id}>"
-    #     )
+        self.parent_id = parent_id
 
 
 ########### PROPERTIES
@@ -69,7 +64,7 @@ class Child:
             name TEXT,
             gender TEXT,
             age INTEGER,
-            FOREIGN KEY (department_id) REFERENCES parents(id))
+            FOREIGN KEY (parent_id) REFERENCES parents(id))
         """
         CURSOR.execute(sql)
         CONN.commit()
@@ -172,7 +167,7 @@ class Child:
         """Return Child object corresponding to the table row matching the specified age"""
         sql = """
             SELECT *
-            FROM employees
+            FROM children
             WHERE age = ?
         """
 

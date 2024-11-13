@@ -1,4 +1,4 @@
-from __init__ import CURSOR, CONN
+from models.__init__ import CURSOR, CONN
 
 class Parent:
 
@@ -9,9 +9,6 @@ class Parent:
         self.name = name
         self.email = email
         self.phone = phone
-
-    # def __repr__(self):
-    #     return f"<Parent {self.id}: {self.name}, {self.email} {self.phone}>"
 
     @property
     def name(self):
@@ -67,7 +64,7 @@ class Parent:
             id INTEGER PRIMARY KEY,
             name TEXT,
             email TEXT,
-            phone INTEGER)
+            phone TEXT)
         """
         CURSOR.execute(sql)
         CONN.commit()
@@ -203,6 +200,4 @@ class Parent:
         CURSOR.execute(sql, (self.id,),)
 
         rows = CURSOR.fetchall()
-        return [
-            Child.instance_from_db(row) for row in rows
-        ]
+        return [Child.instance_from_db(row) for row in rows]
