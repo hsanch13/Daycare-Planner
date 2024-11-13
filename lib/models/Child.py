@@ -83,11 +83,11 @@ class Child:
         Update object id attribute using the primary key value of new row.
         Save the object in local dictionary using table row's PK as dictionary key"""
         sql = """
-                INSERT INTO children (name, gender, age)
-                VALUES (?, ?, ?)
+                INSERT INTO children (name, gender, age, parent_id)
+                VALUES (?, ?, ?, ?)
         """
 
-        CURSOR.execute(sql, (self.name, self.gender, self.age))
+        CURSOR.execute(sql, (self.name, self.gender, self.age, self.parent_id))
         CONN.commit()
 
         self.id = CURSOR.lastrowid
@@ -97,10 +97,10 @@ class Child:
         """Update the table row corresponding to the current Child instance."""
         sql = """
             UPDATE children
-            SET name = ?, gender = ?, age = ?
+            SET name = ?, gender = ?, age = ?, parent_id = ?
             WHERE id = ?
         """
-        CURSOR.execute(sql, (self.name, self.gender, self.age, self.id))
+        CURSOR.execute(sql, (self.name, self.gender, self.age, self.parent_id, self.id))
         CONN.commit()
 
     def delete(self):
@@ -122,9 +122,9 @@ class Child:
         self.id = None
 
     @classmethod
-    def create(cls, name, gender, age):
+    def create(cls, name, gender, age, parent_id):
         """ Initialize a new Child instance and save the object to the database """
-        child = cls(name, gender, age)
+        child = cls(name, gender, age, parent_id)
         child.save()
         return child
 
@@ -139,9 +139,10 @@ class Child:
             child.name = row[1]
             child.gender = row[2]
             child.age = row[3]
+            child.parent_id = row[4]
         else:
             # not in dictionary, create new instance and add to dictionary
-            child = cls(row[1], row[2], row[3])
+            child = cls(row[1], row[2], row[3], row[4])
             child.id = row[0]
             cls.all[child.id] = child
         return child
